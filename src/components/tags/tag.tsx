@@ -1,4 +1,5 @@
 import React, {FC} from "react";
+import classes from "./tags.module.scss";
 
 interface ITagProps {
     name: string,
@@ -18,7 +19,7 @@ const Tag: FC<ITagProps> = ({name, index, onDelete, hashtag}) => {
                 <span style={{color: '#898989', fontWeight: 'bold'}}># </span>
             )}
             {name}
-            <button onClick={onClickDeleteTag}>x</button>
+            <button className={classes.remove__btn} onClick={onClickDeleteTag}>x</button>
         </li>
     );
 }

@@ -1,16 +1,17 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import classes from "./notes.module.scss";
 import Button from "../ui/button/button";
-import {INote} from "../../types/INote";
+import { INote } from "../../types/INote";
 import EditNoteForm from "../ui/forms/edit-note/editNoteForm";
 
 interface INoteProps {
     note: INote,
     currentNotes: INote[],
     setNotes: (newNotes: INote[]) => void;
+    onClick: (newTag: string) => void;
 }
 
-const Note: FC<INoteProps> = ({note, currentNotes, setNotes}) => {
+const Note: FC<INoteProps> = ({note, currentNotes, setNotes, onClick}) => {
     const trashcanIcon = "fa fa-solid fa-trash-can";
     const editIcon = "fa fa-solid fa-pen-to-square";
 
@@ -23,7 +24,18 @@ const Note: FC<INoteProps> = ({note, currentNotes, setNotes}) => {
         <div className={classes.note}>
             <h2 className={classes.note__title}>{note.title}</h2>
             <div className={classes.note__description}>{note.description}</div>
-            <ul className={classes.note__tags}>{note.tags?.map((tag) => <li key={`${note.id}-${tag}`}>{tag}</li>)}</ul>
+            <ul className={classes.note__tags}>{note.tags?.map((tag) => {
+                const onClickAddTag = () => {
+                    onClick(tag)
+                }
+
+                return (
+                    <li key={`${note.id}-${tag}`} value={tag} onClick={onClickAddTag}>
+                        {tag}
+                    </li>
+                );
+            })}
+            </ul>
             <div className={classes.edit__buttons}>
                 <EditNoteForm currentNotes={currentNotes} setNotes={setNotes} editNote={note} icon={editIcon} />
                 <Button icon={trashcanIcon} onClick={onClickRemoveNote}/>
@@ -32,4 +44,4 @@ const Note: FC<INoteProps> = ({note, currentNotes, setNotes}) => {
     );
 };
 
-export default Note;
+export default memo(Note);

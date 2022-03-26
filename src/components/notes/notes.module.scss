@@ -14,7 +14,7 @@
 
   & .notes {
     margin: 1em;
-    width: 1000px;
+    max-width: 1000px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 0;
@@ -23,6 +23,7 @@
     & .note {
       margin: 1em 0;
       border: 3px solid blueviolet;
+      max-height: 500px;
 
       &__title {
         margin: 0;
@@ -31,16 +32,22 @@
       }
 
       &__description {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
         color: black;
         padding: 20px;
-        height: 50%;
+        height: 10em;
       }
 
       &__tags {
+        overflow: hidden;
         list-style: none;
         margin: 1em;
         padding: 0;
-        height: 20%;
+        height: 6rem;
 
         li {
           font-size: 1rem;
@@ -63,7 +70,7 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        margin: 10px;
+        margin: 5px;
       }
     }
   }

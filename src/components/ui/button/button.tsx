@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import classes from "./button.module.scss";
 
 interface IButtonProps {
@@ -17,4 +17,4 @@ const Button: FC<IButtonProps> = ({text, icon, onClick, type= "button", disabled
     </button>
 );
 
-export default Button;
+export default memo(Button);

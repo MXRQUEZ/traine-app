@@ -3,36 +3,35 @@ import classes from "./tagInput.module.scss";
 import TagsList from "../tags/tagsList";
 
 interface ITagInputProps {
-    tags?: string[],
-    onTagChange: (tags: string[]) => void,
+    tags: string[],
+    setTags: (tags: string[]) => void,
+    onFilter: (newTags: string[]) => void;
     hashtag?: string,
 }
 
-const TagInput: FC<ITagInputProps> = ({tags, onTagChange, hashtag}) => {
-    const [inputTags, setTags] = useState<string[]>(tags || []);
+const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter, hashtag}) => {
     const [inputValue, setInputValue] = useState<string>("");
-
-    const notDuplicate = (tags: string[], newTag: string) => !tags.includes(newTag);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.target.value = event.target.value === ',' ? '' : event.target.value;
         setInputValue(event.target.value);
     }
 
-    const addTag = (tag: string) => {
-        if (notDuplicate(inputTags, tag)) {
+    const addTag = (newTag: string) => {
+        if (!tags.includes(newTag)) {
             setInputValue("");
-            setTags([...inputTags, tag]);
-            onTagChange(inputTags);
+            const newTags = [...tags, newTag];
+            setTags(newTags);
+            onFilter(newTags);
         }
     }
 
     const deleteTag = (index: number) => {
-        const tags = inputTags.slice();
+        const newTags = tags.slice();
 
-        tags.splice(index, 1);
-        setTags(tags);
-        onTagChange(inputTags);
+        newTags.splice(index, 1);
+        setTags(newTags);
+        onFilter(newTags);
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -42,7 +41,7 @@ const TagInput: FC<ITagInputProps> = ({tags, onTagChange, hashtag}) => {
             case 'Enter':
             case ',':
                 value = value.trim();
-                if (value && notDuplicate(inputTags, value)) {
+                if (value && !tags.includes(value)) {
                     addTag(value);
                     break;
                 }
@@ -54,7 +53,7 @@ const TagInput: FC<ITagInputProps> = ({tags, onTagChange, hashtag}) => {
     return (
         <div className={classes.tagInputWrapper}>
         <TagsList
-            tags={inputTags}
+            tags={tags}
             onTagDelete={deleteTag}
             hashtag={hashtag}
         />

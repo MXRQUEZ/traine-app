@@ -3,16 +3,18 @@ import classes from "./textArea.module.scss";
 
 interface ITextAreaProps {
     onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    value?: string;
     placeholder?: string;
     defaultValue?: string;
     maxLength?: number;
     required?: boolean;
 }
 
-const TextArea: FC<ITextAreaProps> = ({onChange, placeholder, defaultValue, required, maxLength}) => {
+const TextArea: FC<ITextAreaProps> = ({onChange, value, placeholder, defaultValue, required, maxLength}) => {
     return (
         <textarea
             className={classes.textarea}
+            value={value}
             onChange={onChange}
             placeholder={placeholder}
             required={required}

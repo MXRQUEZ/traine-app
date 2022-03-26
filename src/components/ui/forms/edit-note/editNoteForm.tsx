@@ -20,7 +20,9 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
     const [title, setTitle] = useState<string>(editNote?.title || "");
     const [description, setDescription] = useState<string>(editNote?.description || "");
     const handleOpen = (): void => setModalActive(true);
-    const handleClose = (): void => setModalActive(false);
+    const handleClose = (): void => {
+        setModalActive(false);
+    }
 
     const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setTitle(event.target.value)
@@ -38,6 +40,9 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
             description,
         }
         setNotes([...currentNotes, newNote]);
+        setTitle("");
+        setDescription("");
+        handleClose();
     }
 
     const onSubmitUpdateNote = (event: React.FormEvent): void => {
@@ -49,6 +54,7 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
             description,
         }
         setNotes([...currentNotes]);
+        handleClose();
     }
 
     const disabled = (!title.length || !description.length)
@@ -58,20 +64,40 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
             <Button text={text} icon={icon} onClick={handleOpen} />
             <Modal isActive={isModalActive} onClose={handleClose}>
                 <form className={classes.form} onSubmit={editNote ? onSubmitUpdateNote : onSubmitCreateNote}>
-                    <h3>Create Note</h3>
-                    <Input
-                        onChange={onChangeTitle}
-                        placeholder="Title"
-                        defaultValue={editNote?.title}
-                        required
-                    />
-                    <TextArea
-                        onChange={onChangeDescription}
-                        placeholder="Description"
-                        maxLength={150}
-                        defaultValue={editNote?.description}
-                        required
-                    />
+                    <h3>Note Edit</h3>
+                    {editNote ? (
+                        <>
+                            <Input
+                                onChange={onChangeTitle}
+                                defaultValue={editNote?.title}
+                                placeholder="Title"
+                                required
+                            />
+                            <TextArea
+                                onChange={onChangeDescription}
+                                defaultValue={editNote?.description}
+                                placeholder="Description"
+                                maxLength={150}
+                                required
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Input
+                                onChange={onChangeTitle}
+                                value={title}
+                                placeholder="Title"
+                                required
+                            />
+                            <TextArea
+                                onChange={onChangeDescription}
+                                value={description}
+                                placeholder="Description"
+                                maxLength={200}
+                                required
+                            />
+                        </>
+                    )}
                     <Button disabled={disabled} text="Confirm" type="submit" />
                 </form>
             </Modal>

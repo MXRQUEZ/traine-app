@@ -9,8 +9,8 @@
   {
     "id": 2,
     "title": "Minecraft",
-    "description": "#Minecraft is a #sandbox game. There is a virtual land where users can #create their own #worlds and experiences, using #building blocks, resources discovered on the site and their own creativity.",
-    "tags": ["minecraft", "sandbox", "create", "worlds", "building"]
+    "description": "#Minecraft is a #sandbox game. There is a virtual land where users can #create their own #worlds and experiences, using #building #blocks, #resources discovered on the site and their own creativity.",
+    "tags": ["minecraft", "sandbox", "create", "worlds", "building", "blocks", "resources"]
   },
 
   {
