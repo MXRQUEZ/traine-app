@@ -1,11 +1,11 @@
 import React from 'react';
-import Notes from "./components/notes/notes";
+import NotesList from "./components/notes/notesList";
 import "./styles/main.scss"
 
 const App = () => {
   return (
       <div>
-          <Notes />
+          <NotesList />
       </div>
   );
 };

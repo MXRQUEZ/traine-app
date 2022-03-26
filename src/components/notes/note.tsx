@@ -23,6 +23,7 @@ const Note: FC<INoteProps> = ({note, currentNotes, setNotes}) => {
         <div className={classes.note}>
             <h2 className={classes.note__title}>{note.title}</h2>
             <div className={classes.note__description}>{note.description}</div>
+            <ul className={classes.note__tags}>{note.tags?.map((tag) => <li key={`${note.id}-${tag}`}>{tag}</li>)}</ul>
             <div className={classes.edit__buttons}>
                 <EditNoteForm currentNotes={currentNotes} setNotes={setNotes} editNote={note} icon={editIcon} />
                 <Button icon={trashcanIcon} onClick={onClickRemoveNote}/>
