@@ -1,0 +1,39 @@
+.notes {
+  margin: 1em;
+  width: 1000px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
+  grid-gap: 10px;
+
+  & .note {
+    margin: 1em 0;
+    border: 3px solid blueviolet;
+
+    &__title {
+      margin: 0;
+      padding: 5px;
+      background-color: blueviolet;
+    }
+
+    &__description {
+      padding: 20px;
+      height: 65%;
+    }
+
+    & .edit__buttons {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 10px;
+    }
+  }
+}
+
+.create__wrapper {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  flex-direction: column;
+  margin: 1em;
+}

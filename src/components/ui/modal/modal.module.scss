@@ -1,0 +1,35 @@
+.modal {
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  transition: 0.5s;
+  z-index: 100;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &__content {
+    color: white;
+    background: #191919;
+    border-radius: 15px;
+    min-width: 300px;
+    min-height: 300px;
+    transition: 0.4s all;
+  }
+}
+
+.close__button {
+  padding: 0 5px;
+  display: flex;
+  margin-left: auto;
+  font-size: 20px;
+}

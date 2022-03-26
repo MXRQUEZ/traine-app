@@ -1,0 +1,18 @@
+.textarea {
+  background-color: transparent;
+  font-family: Arial, sans-serif;
+  height: 6em;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  font-size: 1em;
+  color: white;
+  border: 2px solid white;
+  outline: none;
+  resize: none;
+
+  &:focus,
+  &:hover {
+    border-color: blueviolet;
+  }
+}

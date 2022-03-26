@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "title": "Overwatch",
+    "description": "Overwatch is a colorful team-based action game starring a diverse cast of powerful heroes. Travel the world, build a team, and contest objectives in exhilarating 6v6 combat."
+  },
+
+  {
+    "id": 2,
+    "title": "Minecraft",
+    "description": "Minecraft is a sandbox game. There is a virtual land where users can create their own worlds and experiences, using building blocks, resources discovered on the site and their own creativity."
+  },
+
+  {
+    "id": 3,
+    "title": "Rust",
+    "description": "The only aim in Rust is to survive. Everything wants you to die - the island’s wildlife and other inhabitants, the environment, other survivors. Do whatever it takes to last another night."
+  }
+]
