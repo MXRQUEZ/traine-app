@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import Button from "../../button/button";
 import Modal from "../../modal/modal";
 import classes from "./editNote.module.scss";
@@ -26,23 +26,22 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
     const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>): void => setTitle(event.target.value);
     const onChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>): void => setDescription(event.target.value);
 
-    const createTags = () => {
+    const descriptionTags = useMemo(() => {
         const descriptionWords = description
             .replace(/[.,/!$%^&*;:{}=\-_`~()]/g,"")
             .split(" ")
         const hashTags = descriptionWords
             .filter((word) => word.startsWith("#") && !word.startsWith("##"))
         return hashTags.map((tag) => tag.substring(1).toLocaleLowerCase());
-    }
+    }, [description]);
 
     const onSubmitCreateNote = (event: React.FormEvent): void => {
         event.preventDefault();
-        const tags = createTags();
         const newNote: INote = {
             id: getUniqueId(),
             title,
             description,
-            tags,
+            tags: descriptionTags,
         }
         setNotes([...currentNotes, newNote]);
         setTitle("");
@@ -52,13 +51,12 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
 
     const onSubmitUpdateNote = (event: React.FormEvent): void => {
         event.preventDefault();
-        const tags = createTags();
         const existingNoteIndex = currentNotes.findIndex((note: INote) => note.id === editNote!.id);
         currentNotes[existingNoteIndex] = {
             id: currentNotes[existingNoteIndex].id,
             title,
             description,
-            tags,
+            tags: descriptionTags,
         }
         setNotes([...currentNotes]);
         handleClose();
