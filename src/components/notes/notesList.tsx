@@ -14,11 +14,11 @@ const NotesList = () => {
         setAllNotes(newNotes)
     }, []);
 
-    const handleFilter = useCallback((newTags: string[]) => {
+    const handleFilter = useCallback((filterTags: string[]) => {
         const filterResult = allNotes.filter((note: INote) => {
-            const result = newTags.map((tag) => {
+            const result = filterTags.map((tag) => {
                 if (!note.tags?.length) return false;
-                return note.tags?.includes(tag);
+                return note.tags?.some((noteTag) => noteTag.toLocaleLowerCase() === tag.toLocaleLowerCase());
             });
             return !result.includes(false);
         });

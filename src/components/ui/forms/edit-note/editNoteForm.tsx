@@ -6,6 +6,7 @@ import { v4 as getUniqueId } from "uuid";
 import {INote} from "../../../../types/INote";
 import Input from "../../input/input";
 import TextArea from "../../textarea/textArea";
+import Highlighter from "react-highlight-words";
 
 interface IEditFormProps {
     editNote?: INote;
@@ -29,8 +30,8 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
         const descriptionWords = description
             .replace(/[.,/!$%^&*;:{}=\-_`~()]/g,"")
             .split(" ")
-            .filter((word) => word);
-        const hashTags = descriptionWords.filter((word) => word.startsWith("#") && !word.startsWith("##"));
+        const hashTags = descriptionWords
+            .filter((word) => word.startsWith("#") && !word.startsWith("##"))
         return hashTags.map((tag) => tag.substring(1).toLocaleLowerCase());
     }
 
@@ -86,13 +87,12 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
                                 maxLength={300}
                                 required
                             />
-                            <ul className={classes.form__tags}>
-                                {editNote.tags?.map((tag, index) =>
-                                    <li key={`${tag}-${index}`}>
-                                        {tag}
-                                    </li>
-                                )}
-                            </ul>
+                            <div className={classes.form__description_wrapper}>
+                                <Highlighter
+                                    textToHighlight={editNote?.description.replace(/#/g, "")}
+                                    searchWords={editNote.tags!}
+                                />
+                            </div>
                         </>
                     ) : (
                         <>

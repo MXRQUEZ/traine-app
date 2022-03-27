@@ -11,6 +11,7 @@ interface ITagInputProps {
 
 const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter, hashtag}) => {
     const [inputValue, setInputValue] = useState<string>("");
+    const lowerCaseTags = tags.map((tag) => tag.toLocaleLowerCase());
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.target.value = event.target.value === ',' ? '' : event.target.value;
@@ -18,7 +19,7 @@ const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter, hashtag}) => {
     }
 
     const addTag = (newTag: string) => {
-        if (!tags.includes(newTag)) {
+        if (!lowerCaseTags.includes(newTag)) {
             setInputValue("");
             const newTags = [...tags, newTag];
             setTags(newTags);
@@ -41,7 +42,7 @@ const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter, hashtag}) => {
             case 'Enter':
             case ',':
                 value = value.trim();
-                if (value && !tags.includes(value)) {
+                if (value) {
                     addTag(value);
                     break;
                 }

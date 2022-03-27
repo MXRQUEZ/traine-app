@@ -24,10 +24,12 @@ const Note: FC<INoteProps> = ({note, currentNotes, setNotes, onClick}) => {
         onClick(event.currentTarget.dataset.tag as string)
     }, [onClick]);
 
+    const noHashTagDescription = note.description.replace(/#/g, "");
+
     return (
         <div className={classes.note}>
             <h2 className={classes.note__title}>{note.title}</h2>
-            <div className={classes.note__description}>{note.description}</div>
+            <div className={classes.note__description}>{noHashTagDescription}</div>
             <ul className={classes.note__tags}>{note.tags?.map((tag) =>
                 <li key={`${note.id}-${tag}`} data-tag={tag} onClick={onClickAddTag}>
                     {tag}
