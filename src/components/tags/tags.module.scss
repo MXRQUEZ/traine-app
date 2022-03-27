@@ -1,0 +1,27 @@
+.tagsList {
+  display: inline;
+  padding: 0;
+  margin: 0 5px 0 0;
+
+  li {
+    font-size: 1rem;
+    display: inline-block;
+    margin: 3px;
+    padding: 5px;
+    border-radius: 4px;
+    background: #ddd;
+    color: #444;
+
+    & .remove__btn {
+      outline: none;
+      border: none;
+      color: #666;
+      margin-left: 5px;
+      padding: 2px 5px 3px 5px;
+
+      &:hover {
+        color: #dd3345;
+      }
+    }
+  }
+}

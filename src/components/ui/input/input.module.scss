@@ -1,0 +1,15 @@
+.input {
+  background-color: transparent;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  font-size: 1em;
+  color: white;
+  border: 2px solid white;
+  outline: none;
+
+  &:focus,
+  &:hover {
+    border-color: blueviolet;
+  }
+}
