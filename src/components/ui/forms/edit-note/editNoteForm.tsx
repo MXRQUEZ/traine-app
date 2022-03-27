@@ -20,24 +20,28 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
     const [title, setTitle] = useState<string>(editNote?.title || "");
     const [description, setDescription] = useState<string>(editNote?.description || "");
     const handleOpen = (): void => setModalActive(true);
-    const handleClose = (): void => {
-        setModalActive(false);
-    }
+    const handleClose = (): void => setModalActive(false);
 
-    const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setTitle(event.target.value)
-    }
+    const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>): void => setTitle(event.target.value);
+    const onChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>): void => setDescription(event.target.value);
 
-    const onChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        setDescription(event.target.value)
+    const createTags = () => {
+        const descriptionWords = description
+            .replace(/[.,/!$%^&*;:{}=\-_`~()]/g,"")
+            .split(" ")
+            .filter((word) => word);
+        const hashTags = descriptionWords.filter((word) => word.startsWith("#") && !word.startsWith("##"));
+        return hashTags.map((tag) => tag.substring(1).toLocaleLowerCase());
     }
 
     const onSubmitCreateNote = (event: React.FormEvent): void => {
         event.preventDefault();
+        const tags = createTags();
         const newNote: INote = {
             id: getUniqueId(),
             title,
             description,
+            tags,
         }
         setNotes([...currentNotes, newNote]);
         setTitle("");
@@ -47,17 +51,19 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
 
     const onSubmitUpdateNote = (event: React.FormEvent): void => {
         event.preventDefault();
+        const tags = createTags();
         const existingNoteIndex = currentNotes.findIndex((note: INote) => note.id === editNote!.id);
         currentNotes[existingNoteIndex] = {
             id: currentNotes[existingNoteIndex].id,
             title,
             description,
+            tags,
         }
         setNotes([...currentNotes]);
         handleClose();
     }
 
-    const disabled = (!title.length || !description.length)
+    const disabled = (!title.length || !description.length);
 
     return (
         <>
@@ -77,9 +83,16 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
                                 onChange={onChangeDescription}
                                 defaultValue={editNote?.description}
                                 placeholder="Description"
-                                maxLength={150}
+                                maxLength={300}
                                 required
                             />
+                            <ul className={classes.form__tags}>
+                                {editNote.tags?.map((tag, index) =>
+                                    <li key={`${tag}-${index}`}>
+                                        {tag}
+                                    </li>
+                                )}
+                            </ul>
                         </>
                     ) : (
                         <>
@@ -93,7 +106,7 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
                                 onChange={onChangeDescription}
                                 value={description}
                                 placeholder="Description"
-                                maxLength={200}
+                                maxLength={300}
                                 required
                             />
                         </>

@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useCallback} from 'react';
 import classes from "./notes.module.scss";
 import Button from "../ui/button/button";
 import { INote } from "../../types/INote";
@@ -20,21 +20,19 @@ const Note: FC<INoteProps> = ({note, currentNotes, setNotes, onClick}) => {
         setNotes(newNotes);
     }
 
+    const onClickAddTag = useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+        onClick(event.currentTarget.dataset.tag as string)
+    }, [onClick]);
+
     return (
         <div className={classes.note}>
             <h2 className={classes.note__title}>{note.title}</h2>
             <div className={classes.note__description}>{note.description}</div>
-            <ul className={classes.note__tags}>{note.tags?.map((tag) => {
-                const onClickAddTag = () => {
-                    onClick(tag)
-                }
-
-                return (
-                    <li key={`${note.id}-${tag}`} value={tag} onClick={onClickAddTag}>
-                        {tag}
-                    </li>
-                );
-            })}
+            <ul className={classes.note__tags}>{note.tags?.map((tag) =>
+                <li key={`${note.id}-${tag}`} data-tag={tag} onClick={onClickAddTag}>
+                    {tag}
+                </li>
+            )}
             </ul>
             <div className={classes.edit__buttons}>
                 <EditNoteForm currentNotes={currentNotes} setNotes={setNotes} editNote={note} icon={editIcon} />

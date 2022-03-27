@@ -7,10 +7,10 @@ import EditNoteForm from "../ui/forms/edit-note/editNoteForm";
 import TagInput from "../tag-input/tagInput";
 
 const NotesList = () => {
-    const [currentNotes, setNotes] = useState<INote[]>(notes);
+    const [currentNotes, setCurrentNotes] = useState<INote[]>(notes);
     const [allNotes, setAllNotes] = useState<INote[]>(notes);
-    const [tags, setTags] = useState<string[]>([])
-    const setNotesCallback: (newNotes: INote[]) => void = useCallback((newNotes: INote[]) => {
+    const [inputTags, setInputTags] = useState<string[]>([])
+    const setAllNotesCallback: (newNotes: INote[]) => void = useCallback((newNotes: INote[]) => {
         setAllNotes(newNotes)
     }, []);
 
@@ -23,27 +23,25 @@ const NotesList = () => {
             return !result.includes(false);
         });
 
-        setNotes(filterResult);
+        setCurrentNotes(filterResult);
     }, [allNotes]);
 
     useEffect(() => {
-        handleFilter(tags)
-    }, [allNotes, allNotes.length, handleFilter, tags])
+        handleFilter(inputTags)
+    }, [allNotes, allNotes.length, handleFilter, inputTags])
 
     const handleClickAddTag = useCallback((newTag: string) => {
-        if (tags.includes(newTag)) return;
-        const newTags = [...tags, newTag];
-        setTags(newTags);
+        if (inputTags.includes(newTag)) return;
+        const newTags = [...inputTags, newTag];
+        setInputTags(newTags);
         handleFilter(newTags);
-    }, [handleFilter, tags]);
-
-
+    }, [handleFilter, inputTags]);
 
     return (
         <div className={classes.notes__wrapper}>
-            <TagInput setTags={setTags} tags={tags} onFilter={handleFilter} />
+            <TagInput setTags={setInputTags} tags={inputTags} onFilter={handleFilter} />
             <div className={classes.create__wrapper}>
-                <EditNoteForm currentNotes={currentNotes} text="Create Note" setNotes={setNotesCallback} />
+                <EditNoteForm currentNotes={currentNotes} text="Create Note" setNotes={setAllNotesCallback} />
             </div>
             <div className={classes.notes}>
                 {currentNotes.length ? (currentNotes.map((note: INote) =>
@@ -51,7 +49,7 @@ const NotesList = () => {
                         key={note.id}
                         note={note}
                         currentNotes={allNotes}
-                        setNotes={setNotesCallback}
+                        setNotes={setAllNotesCallback}
                         onClick={handleClickAddTag}
                     />
                 )

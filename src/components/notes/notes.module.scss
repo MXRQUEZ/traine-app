@@ -37,6 +37,10 @@
         -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
+        white-space: normal;
+        hyphens: auto;
+        word-wrap: anywhere;
+        overflow-wrap: anywhere;
         color: black;
         padding: 20px;
         height: 10em;
