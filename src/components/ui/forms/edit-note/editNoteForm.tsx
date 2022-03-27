@@ -32,7 +32,8 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
             .split(" ")
         const hashTags = descriptionWords
             .filter((word) => word.startsWith("#") && !word.startsWith("##"))
-        return hashTags.map((tag) => tag.substring(1).toLocaleLowerCase());
+        const tags = hashTags.map((tag) => tag.substring(1).toLocaleLowerCase());
+        return tags.filter((tag) => tag !== "");
     }, [description]);
 
     const onSubmitCreateNote = (event: React.FormEvent): void => {
@@ -87,8 +88,9 @@ const EditNoteForm: FC<IEditFormProps> = ({editNote, text, icon, currentNotes, s
                             />
                             <div className={classes.form__description_wrapper}>
                                 <Highlighter
-                                    textToHighlight={editNote?.description.replace(/#/g, "")}
-                                    searchWords={editNote.tags!}
+                                    textToHighlight={editNote?.description}
+                                    searchWords={editNote.tags!.map((tag) => `#${tag}`)}
+                                    autoEscape
                                 />
                             </div>
                         </>
