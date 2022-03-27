@@ -5,17 +5,16 @@ import Tag from "./tag";
 interface ITagsListProps {
     tags: string[],
     onTagDelete: (index: number, event: React.MouseEvent<HTMLButtonElement>) => void,
-    hashtag?: string,
 }
 
-const TagsList: FC<ITagsListProps> = ({tags, onTagDelete, hashtag}) => {
+const TagsList: FC<ITagsListProps> = ({tags, onTagDelete}) => {
     const list = tags.map((tag, index) => (
         <Tag
             key={`${tag}-${index}`}
             name={tag}
             onDelete={onTagDelete}
             index={index}
-            hashtag={hashtag} />
+        />
     ));
     return (
         <ul className={classes.tagsList}>

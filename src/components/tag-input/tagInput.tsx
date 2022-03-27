@@ -6,10 +6,9 @@ interface ITagInputProps {
     tags: string[],
     setTags: (tags: string[]) => void,
     onFilter: (newTags: string[]) => void;
-    hashtag?: string,
 }
 
-const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter, hashtag}) => {
+const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter}) => {
     const [inputValue, setInputValue] = useState<string>("");
     const lowerCaseTags = tags.map((tag) => tag.toLocaleLowerCase());
 
@@ -53,11 +52,7 @@ const TagInput: FC<ITagInputProps> = ({tags, setTags, onFilter, hashtag}) => {
 
     return (
         <div className={classes.tagInputWrapper}>
-        <TagsList
-            tags={tags}
-            onTagDelete={deleteTag}
-            hashtag={hashtag}
-        />
+        <TagsList tags={tags} onTagDelete={deleteTag} />
         <input
             name="tagInput"
             className={classes.tagInput}
